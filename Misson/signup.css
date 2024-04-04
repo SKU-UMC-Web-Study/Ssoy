@@ -1,0 +1,90 @@
+.fail-name{
+    display:none;
+    color:red;
+}
+.success-name{
+    display:none;
+    color:green;
+}
+.fail-email{
+    display:none;
+    color:red;
+}
+.success-email{
+    display:none;
+    color:green;
+}.fail-age{
+    display:none;
+    color:red;
+}
+.success-age{
+    display:none;
+    color:green;
+}
+.fail-passwd{
+    display:none;
+    color:red;
+}
+.success-passwd{
+    display:none;
+    color:green;
+}
+.fail-passwd2{
+    display:none;
+    color:red;
+}
+.success-passwd2{
+    display:none;
+    color:green;
+}
+
+.container{
+    background-color: rgb(215, 240, 250);
+    margin: 0 auto;
+    width: 700px; 
+    height: 600px; 
+    justify-content: center;
+    align-items: center;
+    border-radius:10px;
+
+}
+html, body{
+    background-color: skyblue;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0; 
+}
+.infomation{
+    text-align:center;
+    
+}
+input{
+    border: 1px solid white; /* 테두리 색상과 두께를 조정합니다. */
+    width: 350px; /* 원하는 너비 설정 */
+    height: 30px;
+    background-color: transparent;
+    border-radius: 5px;
+}
+.input-con{
+    padding-bottom: 20px;
+}
+
+.modal{
+    display:none;
+}
+label {
+    display: block;
+    
+}
+button{
+    width:230px;
+    height:30px;
+    border-radius:5px;
+    background-color:rgb(78, 78, 78);
+    color: #ffffff;
+}
+div{
+    text-align:center;
+}
