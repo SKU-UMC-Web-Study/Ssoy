@@ -18,6 +18,16 @@ const passwd2=document.querySelector('#passwd2');
 const passwd2Success = document.querySelector('.success-passwd2');
 const passwd2Fail = document.querySelector('.fail-passwd2');
 
+const modal = document.querySelector('.modal'); 
+const btnOpen = document.getElementById('btnOpen');
+const btnClose = document.getElementById('btnClose');
+
+btnOpen.addEventListener('click',()=>{
+    modal.style.display='flex';
+});
+btnClose.addEventListener('click',()=>{
+    modal.style.display='none';
+});
 
 const numPattern= /^\d+$/;
 const emailPattern=/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -63,36 +73,87 @@ let emailCheck =()=>{
 }
 let ageCheck =()=>{
     if(numPattern.test(age.value)==false){
-        emailFail.innerText = '나이는 숫자입니다!';
-        emailSuccess.style.display = 'none';
-        emailFail.style.display = 'flex';
+        ageFail.innerText = '나이는 숫자입니다!';
+        ageSuccess.style.display = 'none';
+        ageFail.style.display = 'flex';
     }
     else if(email.value==''){
-        emailFail.innerText = '필수 입력 항목입니다!';
-        emailSuccess.style.display = 'none';
-        emailFail.style.display = 'flex';
+        ageFail.innerText = '필수 입력 항목입니다!';
+        ageSuccess.style.display = 'none';
+        ageFail.style.display = 'flex';
     }
     else if(age.value<0){
-        emailFail.innerText = '나이는 음수가 될 수 없습니다';
-        emailSuccess.style.display = 'none';
-        emailFail.style.display = 'flex';
+        ageFail.innerText = '나이는 음수가 될 수 없습니다';
+        ageSuccess.style.display = 'none';
+        ageFail.style.display = 'flex';
     }
     else if(age.value%1!==0){
-        emailFail.innerText = '나이는 소수가 될 수 없습니다 ';
+        ageFail.innerText = '나이는 소수가 될 수 없습니다 ';
         emailSuccess.style.display = 'none';
-        emailFail.style.display = 'flex';
+        ageFail.style.display = 'flex';
     }
     else if(age.value<=18){
-        emailFail.innerText = '19세 이상만 가입이 가능합니다. ';
-        emailSuccess.style.display = 'none';
-        emailFail.style.display = 'flex';
+        ageFail.innerText = '19세 이상만 가입이 가능합니다. ';
+        ageSuccess.style.display = 'none';
+        ageFail.style.display = 'flex';
     }
     else{
-        emailSuccess.style.display = 'flex';
-        emailFail.style.display = 'none';
+        ageSuccess.style.display = 'flex';
+        ageFail.style.display = 'none';
     }
 }
-
+let passwdCheck= ()=>{
+    if(numPattern.test(passwd.value)){
+        passwdFail.innerText = '비밀번호는 문자열이어야 합니다.';
+        passwdSuccess.style.display = 'none';
+        passwdFail.style.display = 'flex';
+    }
+    else if(passwd.value.length<3){
+        passwdFail.innerText ='비밀번혼느 최소 4자리 이상이어야 합니다.';
+        passwdSuccess.style.display='none';
+        passwdFail.style.display='flex';
+    }
+    else if(passwd.value.length>13){
+        passwdFail.innerText ='비밀번호는 최대 12자리까지 가능합니다.';
+        passwdSuccess.style.display='none';
+        passwdFail.style.display='flex';
+    }
+    else if(passwdpattern.test(passwd.value)==false){
+        passwdFail.innerText ='영어, 숫자, 특수문자를 모두 조합해서 작성해야 합니다.';
+        passwdSuccess.style.display='none';
+        passwdFail.style.display='flex';
+    }
+    else if(passwd.value=''){
+        passwdFail.innerText ='필수 입력 항목입니다';
+        passwdSuccess.style.display='none';
+        passwdFail.style.display='flex';
+    }
+    else{
+        passwdSuccess.style.display = 'flex';
+        passwdFail.style.display = 'none';
+    }
+}
+let passwd2Check= ()=>{
+    if(numPattern.test(passwd2.value)){
+        passwd2Fail.innerText = '비밀번호는 문자열이어야 합니다.';
+        passwd2Success.style.display = 'none';
+        passwd2Fail.style.display = 'flex';
+    }
+    else if(passwd2.value=''){
+        passwd2Fail.innerText ='필수 입력 항목입니다';
+        passwd2Success.style.display='none';
+        passwd2Fail.style.display='flex';
+    }
+    else if(passwd2.value!==passwd.value){
+        passwd2Fail.innerText ='비밀번호가 일치하지 않습니다';
+        passwd2Success.style.display='none';
+        passwd2Fail.style.display='flex';
+    }
+    else{
+        passwdSuccess.style.display = 'flex';
+        passwdFail.style.display = 'none';
+    }
+}
 
 
 Name.addEventListener('blur', nameCheck);
