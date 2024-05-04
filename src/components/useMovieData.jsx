@@ -4,6 +4,7 @@ import axios from 'axios';
 const useMovieData = (url) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [detail, setDetail]=useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -11,6 +12,8 @@ const useMovieData = (url) => {
       try {
         const response = await axios.get(url);
         setMovies(response.data.results);
+        setDetail(response.data);
+        console.log(response.data);
       } catch (e) {
         console.log(e);
       }
@@ -18,9 +21,9 @@ const useMovieData = (url) => {
     };
 
     fetchMovies();
-  }, []);
+  }, [url]);
 
-  return { results: movies, isLoading };
+  return { result:movies, isLoading ,detail};
 };
 
 export default useMovieData;
