@@ -17,13 +17,9 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Upcoming = () => {
-  const url = 'https://api.themoviedb.org/3/movie/upcoming';
-  const params = { language: 'en-US', page: '1' };
-  const headers = {
-    accept: 'application/json',
-    Authorization: import.meta.env.VITE_API_TOKEN,
-  };
-  const { results: movies, isLoading } = useMovieData(url, params, headers);
+  const url = `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_API_KEY}`;
+ 
+  const { results: movies, isLoading } = useMovieData(url);
 
   return (
     <div>

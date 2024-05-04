@@ -17,13 +17,9 @@ body{
 `;
 
 const Toprated = () =>{
-  const url = 'https://api.themoviedb.org/3/movie/top_rated';
-  const params = { language: 'en-US', page: '1' };
-  const headers = {
-    accept: 'application/json',
-    Authorization: import.meta.env.VITE_API_TOKEN
-  }
-  const { results: movies, isLoading } = useMovieData(url, params, headers);
+  const url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${import.meta.env.VITE_API_KEY}`;
+ 
+  const { results: movies, isLoading } = useMovieData(url);
 
   return (
     <div>
