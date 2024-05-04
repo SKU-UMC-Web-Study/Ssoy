@@ -28,6 +28,9 @@ const MovieOverview = styled.div`
   flex-basis: 50%; 
   padding: 100px 20px;
   color: white; 
+  span{
+    color:yellow;
+  }
 `;
 
 const Moviedetail = () => {
@@ -38,7 +41,15 @@ const Moviedetail = () => {
     if (isLoading) {
         return <Loading />;
     }
-
+    const Stars = ({ rating }) => { 
+        let Starcount = Math.round(rating); 
+        let stars = '';
+        for (let i = 0; i < 10; i++) {
+          stars += i < Starcount ? '★' : '';
+        }
+        return <span>{stars}</span>;
+    };
+    
     return (
         <MovieContainer>
             <MovieImage>
@@ -46,7 +57,7 @@ const Moviedetail = () => {
             </MovieImage>
             <MovieOverview>
                 <h2>{detail.title}</h2>
-                <h3>평점: {detail.vote_average}</h3>
+                <h3>평점: <Stars rating={detail.vote_average}/></h3>
                 <h3>개봉일: {detail.release_date}</h3>
                 {detail.overview ? (<p>{detail.overview}</p>) : (<p>tmdb에서 제공하는 API의 상세정보가 없습니다.</p>)}
             </MovieOverview>
