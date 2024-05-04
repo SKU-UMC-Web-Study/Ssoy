@@ -8,7 +8,7 @@ function Movie (props) {
   return (
     
     
-    <MovieContainer>
+    <MovieContainer> 123
         <MovieImg src={IMG_BASE_URL + poster_path} alt = "영화포스터"/>
         <OverviewCon>
             <MovieTitle>{title}</MovieTitle>
