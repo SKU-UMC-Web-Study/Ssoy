@@ -53,7 +53,7 @@ const Header = () => {
           <NavLink to="/nowplaying" isClicked={pathname === '/nowplaying'}>Now Playing</NavLink>
           <NavLink to="/toprated" isClicked={pathname === '/toprated'}>TopRated</NavLink>
           <NavLink to="/upcoming" isClicked={pathname === '/upcoming'}>Upcoming</NavLink>
-          <NavLink to="/login" onClick={handleClick}>{isLoggedIn ? "로그아웃" : "로그인"}</NavLink>
+          <NavLink to="/signup"isClicked={pathname === '/signup'}> 회원가입</NavLink>
         </NavMenu>
       </Navcontainer>
     </nav>

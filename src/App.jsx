@@ -7,6 +7,8 @@ import Header from './components/Header.jsx';
 import Welcome from './components/Welcome.jsx';
 import NotFound from './components/NotFound.jsx';
 import Moviedetail from './components/Moviedetail.jsx';
+import Signup from './components/Signup.jsx';
+import Login from './components/Login.jsx';
 
 const App = () =>{
   
@@ -23,6 +25,8 @@ const App = () =>{
         <Route path='/' element={<Welcome />} />
         <Route path="/movies/:id" element={<Moviedetail />} />
         <Route path='*' element={<NotFound/>}/>
+        <Route path='/signup' element ={<Signup/>}/>
+        <Route path='/login' element ={<Login/>}/>
       </Routes>
       </BrowserRouter>
       

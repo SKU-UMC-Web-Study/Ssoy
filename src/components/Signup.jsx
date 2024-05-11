@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { useState } from 'react';
-
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: #262952;
@@ -17,11 +18,12 @@ const InputBox = styled.input`
   font-size: 16px;
   outline: none;
   border: none;
-  width:300px;
-  margin-bottom: 30px;
+  width: 500px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
-const InputCon = styled.div`
+const InputCon = styled.form`
   display: flex;
   flex-direction: column; 
   align-items: center;
@@ -31,48 +33,63 @@ const InputCon = styled.div`
 const SubmitBtn = styled.button`
   border-radius: 16px;
   background-color: white;
-  border:none;
+  border: none;
   color: black;
   font-size: 16px;
-  width:300px;
-  
+  width: 500px;
 `;
-const Title = styled.h1`
-color:white;
-`
-const AddtionCon =styled.div `
 
-`
-const Addition= styled.p`
-color:white;
-`
+const Title = styled.h1`
+  color: white;
+`;
+
+const AddtionCon = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+`;
+
+const Addition = styled.p`
+  color: white;
+  margin-right: 20px;
+`;
+
+const Error = styled.p`
+  color: red;
+`;
 
 const Signup = () => {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    age: '',
-    password: '',
-    confirmpassword: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+  const { register, watch, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
+  const onSubmit = (data) => {
+    console.log(data);
+    navigate('/login');
+    
   };
 
   return (
     <>
       <GlobalStyle />
       <div>
-        <InputCon>
+        <InputCon onSubmit={handleSubmit(onSubmit)}>
           <Title>회원가입 페이지</Title>
-          <InputBox placeholder="이름을 입력해주세요" type="text" name="name" value={form.name} onChange={handleChange} />
-          <InputBox placeholder="이메일을 입력해주세요" type="email" name="email" value={form.email} onChange={handleChange} />
-          <InputBox placeholder="나이를 입력해주세요" type="text" name="age" value={form.age} onChange={handleChange} />
-          <InputBox placeholder="비밀번호를 입력해주세요" type="password" name="password" value={form.password} onChange={handleChange} />
-          <InputBox placeholder="비밀번호를 다시 입력해주세요" type="password" name="confirmpassword" value={form.confirmpassword} onChange={handleChange} />
-          <SubmitBtn>가입하기</SubmitBtn>
+          <InputBox placeholder="이름을 입력해주세요" type="text" name='name' {...register('name', { required: true, pattern: /^[A-Za-z]+$/i })} />
+          {errors.name && errors.name.type === 'required' && (<Error>이름을 입력해주세요</Error>)}
+          {errors.name && errors.name.type === 'pattern' && (<Error>이름은 문자열이어야 합니다</Error>)}
+          <InputBox placeholder="이메일을 입력해주세요" type="email" name='email' {...register('email', { required: true, pattern: /^\S+@\S+$/i })} />
+          {errors.email && errors.email.type === 'pattern' && (<Error>이메일 양식에 맞지 않습니다</Error>)}
+          {errors.email && errors.email.type === 'required' && (<Error>이메일을 입력해주세요</Error>)}
+          <InputBox placeholder="나이를 입력해주세요" type="text" name='age' {...register('age', { required: true, min: { value: 19, message: "나이는 19세 이상이어야 합니다" }, pattern: { value: /^[0-9]+$/, message: "숫자로 작성하여야 합니다" } })} />
+          {errors.age && <Error>{errors.age.message}</Error>}
+          <InputBox placeholder="비밀번호를 입력해주세요" type="password" {...register('password', { required: true, minLength: 4, maxLength: 12, pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{4,12}$/ })} />
+          {errors.password && errors.password.type === 'required' && <Error>비밀번호를 입력해주세요</Error>}
+          {errors.password && errors.password.type === 'minLength' && <Error>비밀번호는 최소 4자리 이상이어야 합니다</Error>}
+          {errors.password && errors.password.type === 'maxLength' && <Error>비밀번호는 최대 12자리까지 가능합니다</Error>}
+          {errors.password && errors.password.type === 'pattern' && <Error>영어, 숫자, 특수문자를 조합해서 작성해주세요</Error>}
+          <InputBox placeholder="비밀번호를 다시 입력해주세요" type="password" {...register('confirmpassword', { required: true, validate: (value) => value === watch('password') })} />
+          {errors.confirmpassword && errors.confirmpassword.type === 'required' && <Error>비밀번호를 입력해주세요</Error>}
+          {errors.confirmpassword && errors.confirmpassword.type === 'validate' && <Error>비밀번호가 일치하지 않습니다</Error>}
+          <SubmitBtn type="submit">제출하기</SubmitBtn>
           <AddtionCon>
             <Addition>이미 아이디가 있으신가요?</Addition>
             <Addition>로그인 페이지로 이동하기</Addition>
@@ -82,6 +99,5 @@ const Signup = () => {
     </>
   );
 };
-
 
 export default Signup;
