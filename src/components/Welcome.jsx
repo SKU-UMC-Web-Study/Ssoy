@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { useState, useEffect } from 'react'; 
 import useSearch from './Search';
 import Loading from './Loading';
+import useDebounce from './useDebounce';
 
 const Container = styled.div`
   width: 100%;
@@ -146,8 +147,8 @@ const AppContainer = styled.div`
 const Welcome = () => {
   const [inputValue, setInputValue] = useState('');
   const [show, setShow] =useState(false);
-  const {movies, isLoading } = useSearch(inputValue);
-  
+  const debouncedText = useDebounce(inputValue, 200);
+  const {movies, isLoading } = useSearch(debouncedText);
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
