@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import useSearch from './Search';
 import Loading from './Loading';
 import useDebounce from './useDebounce';
+import {Link} from 'react-router-dom';
 
 const Container = styled.div`
   width: 100%;
@@ -170,12 +171,12 @@ const Welcome = () => {
           </Inputcon>
         </SearchContainer>
         <div>
-          {isLoading ? (
-            <Loading />
-          ) : 
+          {isLoading ? 
+          '데이터를 받아오는 중입니다.': 
             show && (         
             <AppContainer>
               {movies.map((movie) => (
+                <Link key={movie.id} to={`/movies/${movie.id}`}>
                 <MovieContainer key={movie.id}>
                   <MovieImg src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="영화포스터" />
                   <OverviewCon>
@@ -187,6 +188,7 @@ const Welcome = () => {
                     <VoteSpan>{movie.vote_average}</VoteSpan>
                   </MovieInfo>
                 </MovieContainer>
+                </Link>
               ))}
             </AppContainer>
           )}
