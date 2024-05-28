@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components';
-import useMovieData from './useMovieData';
+import useMovieData from '../hooks/useMovieData';
 import Loading from './Loading';
 import { Link } from 'react-router-dom';
 const MovieContainer = styled.div`

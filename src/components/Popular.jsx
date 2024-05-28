@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components';
-import useMovieData from './useMovieData';
+import useMovieData from '../hooks/useMovieData';
 import Loading from './Loading';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 const MovieContainer = styled.div`
 position: relative;
@@ -95,6 +96,7 @@ const Popular = () =>{
       </MovieContainer>
       </Link>
     ))}
+    
   </AppContainer>
 )}
       </div>

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import useMovieData from './useMovieData';
+import useMovieData from '../hooks/useMovieData';
 import Loading from './Loading';
 import { useParams } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import useCredit from './useCredit';
+import useCredit from '../hooks/useCredit';
 
 const GlobalStyle = createGlobalStyle`
   html, body {
