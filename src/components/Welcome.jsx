@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import { useState, useEffect } from 'react'; 
-import useSearch from './Search';
+import useSearch from '../hooks/useSearch';
 import Loading from './Loading';
-import useDebounce from './useDebounce';
+import useDebounce from '../hooks/useDebounce';
 import {Link} from 'react-router-dom';
+import useGetUser from '../hooks/useGetuser';
 
 const Container = styled.div`
   width: 100%;
@@ -144,22 +145,67 @@ const AppContainer = styled.div`
     background: #05052e; 
   }
 `;
+const Modal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+`;
+const ModalContent = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+`;
+
+const ModalButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #d070fb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+`;
 
 const Welcome = () => {
   const [inputValue, setInputValue] = useState('');
   const [show, setShow] =useState(false);
   const debouncedText = useDebounce(inputValue, 200);
+  const [modalVisible, setModalVisible] = useState(true);
   const {movies, isLoading } = useSearch(debouncedText);
+  const { loading, username } = useGetUser();
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
   useEffect(() => {
     setShow(inputValue.trim() !== ''); 
   }, [inputValue]);
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
   return (
     <div>
       <GlobalStyle />
       <div>
+        {modalVisible && (
+          <Modal>
+            <ModalContent>
+              {loading ? (
+                <p>로딩 중...</p>
+              ) : (
+                <p>{username ? `${username}님 환영합니다` : '환영합니다'}</p>
+              )}
+              <ModalButton onClick={handleCloseModal}>확인</ModalButton>
+            </ModalContent>
+          </Modal>
+        )}
         <Container>
           <p>환영합니다</p>
         </Container>
