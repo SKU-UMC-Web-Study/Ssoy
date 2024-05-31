@@ -6,6 +6,7 @@ const useMovieData = (url) => {
   const [isLoading, setIsLoading] = useState(true);
   const [detail, setDetail]=useState(null);
 
+
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
