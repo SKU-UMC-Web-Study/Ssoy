@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import useMovieData from '../hooks/useMovieData';
 import Loading from './Loading';
-import Pagination from "react-js-pagination";
 import styled from 'styled-components';
 
 const MovieContainer = styled.div`
