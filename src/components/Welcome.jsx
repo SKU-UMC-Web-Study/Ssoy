@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useState, useEffect } from 'react'; 
 import useSearch from '../hooks/useSearch';
 import Loading from './Loading';
 import useDebounce from '../hooks/useDebounce';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useGetUser from '../hooks/useGetuser';
+
 
 const Container = styled.div`
   width: 100%;
@@ -41,7 +41,6 @@ const Inputcon = styled.div`
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: #262952;
-    
   }
 `;
 
@@ -85,6 +84,7 @@ const MovieContainer = styled.div`
   &:hover {
     opacity: 0.5;
   }
+  
 `;
 
 const OverviewCon = styled.div`
@@ -145,6 +145,7 @@ const AppContainer = styled.div`
     background: #05052e; 
   }
 `;
+
 const Modal = styled.div`
   position: fixed;
   top: 50%;
@@ -156,6 +157,7 @@ const Modal = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 `;
+
 const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
@@ -175,71 +177,79 @@ const ModalButton = styled.button`
 `;
 
 const Welcome = () => {
+
   const [inputValue, setInputValue] = useState('');
-  const [show, setShow] =useState(false);
+  const [show, setShow] = useState(false);
   const debouncedText = useDebounce(inputValue, 200);
   const [modalVisible, setModalVisible] = useState(true);
-  const {movies, isLoading } = useSearch(debouncedText);
+  const { movies, isLoading } = useSearch(debouncedText);
   const { loading, username } = useGetUser();
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
+
   useEffect(() => {
-    setShow(inputValue.trim() !== ''); 
+    setShow(inputValue.trim() !== '');
   }, [inputValue]);
+
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+
   return (
     <div>
       <GlobalStyle />
-      <div>
-        {modalVisible && (
-          <Modal>
-            <ModalContent>
-              {loading ? (
-                <p>로딩 중...</p>
-              ) : (
-                <p>{username ? `${username}님 환영합니다` : '환영합니다'}</p>
-              )}
-              <ModalButton onClick={handleCloseModal}>확인</ModalButton>
-            </ModalContent>
-          </Modal>
-        )}
-        <Container>
-          <p>환영합니다</p>
-        </Container>
-        <SearchContainer>
-          <h2>Find your movies!</h2>
-          <Inputcon>
-            <Input type="text" value={inputValue} onChange={handleInputChange} />
-            <Button onClick={handleInputChange}>검색</Button> 
-          </Inputcon>
-        </SearchContainer>
+      
         <div>
-          {isLoading ? 
-          '데이터를 받아오는 중입니다.': 
-            show && (         
-            <AppContainer>
-              {movies.map((movie) => (
-                <Link key={movie.id} to={`/movies/${movie.id}`}>
-                <MovieContainer key={movie.id}>
-                  <MovieImg src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="영화포스터" />
-                  <OverviewCon>
-                    <MovieTitle>{movie.title}</MovieTitle>
-                    <p>{movie.overview}</p>
-                  </OverviewCon>
-                  <MovieInfo>
-                    <MovieTitle>{movie.title}</MovieTitle>
-                    <VoteSpan>{movie.vote_average}</VoteSpan>
-                  </MovieInfo>
-                </MovieContainer>
-                </Link>
-              ))}
-            </AppContainer>
+          {modalVisible && (
+            <Modal>
+              <ModalContent>
+                {loading ? (
+                  <p>로딩 중...</p>
+                ) : (
+                  <p>{username ? `${username}님 환영합니다` : '환영합니다'}</p>
+                )}
+                <ModalButton onClick={handleCloseModal}>확인</ModalButton>
+              </ModalContent>
+            </Modal>
           )}
+          <Container>
+            <p>환영합니다</p>
+          </Container>
+          <SearchContainer>
+            <h2>Find your movies!</h2>
+            <Inputcon>
+              <Input type="text" value={inputValue} onChange={handleInputChange} />
+              <Button onClick={handleInputChange}></Button> 
+            </Inputcon>
+          </SearchContainer>
+          <div>
+            {isLoading ? 
+              '데이터를 받아오는 중입니다.' : 
+              show && (
+                <AppContainer>
+                  {movies.map((movie) => (
+                    <Link key={movie.id} to={`/movies/${movie.id}`}>
+                      <MovieContainer>
+                        <MovieImg src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="영화포스터" />
+                        <OverviewCon>
+                          <MovieTitle>{movie.title}</MovieTitle>
+                          <p>{movie.overview}</p>
+                        </OverviewCon>
+                        <MovieInfo>
+                          <MovieTitle>{movie.title}</MovieTitle>
+                          <VoteSpan>{movie.vote_average}</VoteSpan>
+                        </MovieInfo>
+                      </MovieContainer>
+                    </Link>
+                  ))}
+                </AppContainer>
+              )
+            }
+          </div>
         </div>
-      </div>
+      
     </div>
   );
 };
